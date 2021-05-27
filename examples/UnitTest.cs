@@ -22,10 +22,10 @@ namespace examples
         }
     }
 
-    public class Clock
+    public class Clock : IClock
     {
         public TimeOfDay Now { get; set; }
-        public static Clock Instance 
+        public static IClock Instance 
         { 
             get
             {
@@ -41,22 +41,8 @@ namespace examples
     {
     }
 
-    public class TestDataGenerator : IEnumerable<object[]>
-    {
-        public IEnumerator<object[]> GetEnumerator()
-        {
-            yield return new object[]
-            {
-                Clock.Instance
-            };
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            yield return new object[]
-            {
-                Clock.Instance
-            };
-        }
-    }
+public interface IClock
+{
+    TimeOfDay Now { get; }
+}
 }
