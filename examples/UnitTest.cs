@@ -7,22 +7,22 @@ namespace examples
 {
     public class UnitTest
     {
-        private static Clock clockInstance = Clock.Instance;
+        private static LocalClock clockInstance = LocalClock.Instance;
 
         [Theory]
         [MemberData(nameof(GetClock))]
-        public void Test(Clock clock)
+        public void Test(Func<TimeOfDay> timeOfDay)
         {
-            var now = clock.Now;
+            var now = timeOfDay();
         }
 
         public static IEnumerable<object[]> GetClock()
         {
-            yield return new object[] { Clock.Instance };
+            yield return new object[] { LocalClock.Instance };
         }
     }
 
-    public class Clock : IClock
+    public class LocalClock : IClock
     {
         public TimeOfDay Now { get; set; }
         public static IClock Instance 
@@ -30,11 +30,11 @@ namespace examples
             get
             {
                 if (instance == null)
-                    instance = new Clock();
+                    instance = new LocalClock();
                 return instance;
             }
         }
-        private static Clock instance;
+        private static IClock instance;
     }
 
     public class TimeOfDay
