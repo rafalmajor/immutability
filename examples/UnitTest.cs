@@ -11,9 +11,8 @@ namespace examples
 
         [Theory]
         [MemberData(nameof(GetClock))]
-        public void Test(Func<TimeOfDay> timeOfDay)
+        public void Test(TimeOfDay now)
         {
-            var now = timeOfDay();
         }
 
         public static IEnumerable<object[]> GetClock()
@@ -37,12 +36,8 @@ namespace examples
         private static IClock instance;
     }
 
-    public class TimeOfDay
+    public interface IClock
     {
+        TimeOfDay Now { get; }
     }
-
-public interface IClock
-{
-    TimeOfDay Now { get; }
-}
 }
