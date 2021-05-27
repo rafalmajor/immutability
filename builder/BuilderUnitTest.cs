@@ -13,32 +13,37 @@ namespace builder
             var jon = new Person.Builder
             {
                 Name = "Jon",
-                Phones = { new PhoneNumber.Builder{ PhoneType = PhoneType.Mobile, Number = "123456"}.Build() }
+                Phones = 
+                { new PhoneNumber.Builder
+                    { 
+                        PhoneType = PhoneType.Mobile, 
+                        Number = "123456"
+                    }.Build() 
+                }
             }.Build();
         }
     }
 
-    public class Person
+public class Person
+{
+    private Person(Person.Builder builder)
     {
-        private Person(Person.Builder builder)
-        {
-            this.Name = builder.Name;
-            this.Phones = builder.Phones.ToImmutableList();
-        }
-        public string Name { get; }
-        public IImmutableList<PhoneNumber> Phones { get; } 
+        this.Name = builder.Name;
+        this.Phones = builder.Phones.ToImmutableList();
+    }
+    public string Name { get; }
+    public IImmutableList<PhoneNumber> Phones { get; } 
 
-        public class Builder
+    public class Builder
+    {
+        public string Name { get; set;}
+        public List<PhoneNumber> Phones { get; } = new List<PhoneNumber>(); 
+        public Person Build()
         {
-            public string Name { get; set;}
-            public List<PhoneNumber> Phones { get; } = new List<PhoneNumber>(); 
-
-            public Person Build()
-            {
-                return new Person(this);
-            }
+            return new Person(this);
         }
     }
+}
 
     public class PhoneNumber
     {
